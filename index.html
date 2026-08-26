@@ -12,48 +12,73 @@
       --text: #37352f;
       --text-muted: #787774;
       --primary: #2383e2;
-      --accent: #eb5757;
       --green: #0f7b6c;
-      --green-bg: #eaf5f2;
+      --lider-color: #1967d2;
+      --jumbo-color: #137333;
+      --mayorista-color: #c5221f;
     }
     * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
-    body { background: var(--bg); color: var(--text); margin: 0; padding: 0 0 60px 0; }
+    body { background: var(--bg); color: var(--text); margin: 0; padding-bottom: 80px; }
     
-    .cover-container { width: 100%; height: 180px; overflow: hidden; background: #e3e2de; position: relative; }
+    .cover-container { width: 100%; height: 160px; overflow: hidden; background: #e3e2de; }
     .cover-container img { width: 100%; height: 100%; object-fit: cover; }
     
-    .page-container { max-width: 900px; margin: 0 auto; padding: 0 20px; position: relative; }
-    .page-icon { font-size: 50px; margin-top: -35px; margin-bottom: 10px; width: fit-content; background: white; border-radius: 8px; padding: 2px 6px; }
-    h1 { font-size: 32px; font-weight: 700; margin: 0 0 20px 0; }
+    .page-container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+    .page-icon { font-size: 45px; margin-top: -30px; margin-bottom: 8px; width: fit-content; background: white; border-radius: 8px; padding: 2px 6px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+    
+    .header-actions { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
+    h1 { font-size: 28px; margin: 0; }
 
-    .grid-layout { display: grid; grid-template-columns: 1fr 320px; gap: 24px; }
-    @media (max-width: 768px) { .grid-layout { grid-template-columns: 1fr; } }
+    .grid-layout { display: grid; grid-template-columns: 1fr 340px; gap: 24px; }
+    @media (max-width: 820px) { .grid-layout { grid-template-columns: 1fr; } }
 
-    .card-box { background: white; border: 1px solid var(--border); border-radius: 6px; padding: 16px; margin-bottom: 20px; }
+    .card-box { background: white; border: 1px solid var(--border); border-radius: 8px; padding: 16px; margin-bottom: 20px; }
     .card-box.summary { background: var(--card-bg); }
     
     .section-title { font-weight: 600; font-size: 15px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
     
-    .item-row { display: grid; grid-template-columns: auto 1fr auto auto; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); }
+    .item-row { display: grid; grid-template-columns: auto 1fr auto auto; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); }
     .item-row:last-child { border-bottom: none; }
-    .badge { font-size: 12px; padding: 2px 8px; border-radius: 4px; font-weight: 500; text-decoration: none; }
-    .badge-lider { background: #e8f0fe; color: #1967d2; }
-    .badge-jumbo { background: #e6f4ea; color: #137333; }
-    .badge-mayorista { background: #fce8e6; color: #c5221f; }
-    .badge-none { background: #f1f3f4; color: #5f6368; }
-
-    .btn { background: var(--card-bg); border: 1px solid var(--border); padding: 8px 14px; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 500; }
-    .btn-primary { background: var(--primary); color: white; border: none; }
-    .btn-sm { padding: 4px 8px; font-size: 12px; }
     
-    /* Modal / Pop-up */
-    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); justify-content: center; align-items: center; z-index: 100; }
+    .badge { font-size: 11px; padding: 3px 8px; border-radius: 4px; font-weight: 600; text-decoration: none; display: inline-block; }
+    .badge-Lider { background: #e8f0fe; color: var(--lider-color); }
+    .badge-Jumbo { background: #e6f4ea; color: var(--jumbo-color); }
+    .badge-Mayorista { background: #fce8e6; color: var(--mayorista-color); }
+    .badge-none { background: #f1f3f4; color: var(--text-muted); }
+
+    .btn { background: var(--card-bg); border: 1px solid var(--border); padding: 8px 14px; border-radius: 6px; cursor: pointer; font-size: 14px; font-weight: 500; transition: background 0.2s; }
+    .btn:hover { background: #eceae5; }
+    .btn-primary { background: var(--primary); color: white; border: none; }
+    .btn-primary:hover { background: #1d72c7; }
+    .btn-sm { padding: 4px 8px; font-size: 12px; }
+
+    /* Desplegables por Supermercado */
+    .super-collapse { border: 1px solid var(--border); border-radius: 6px; margin-bottom: 10px; background: white; overflow: hidden; }
+    .super-collapse summary { padding: 12px 16px; font-weight: 600; cursor: pointer; display: flex; justify-content: space-between; align-items: center; list-style: none; user-select: none; }
+    .super-collapse summary::-webkit-details-marker { display: none; }
+    .super-collapse-content { padding: 12px 16px; border-top: 1px solid var(--border); background: var(--card-bg); font-size: 14px; }
+
+    /* Modal */
+    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); justify-content: center; align-items: center; z-index: 100; }
     .modal.active { display: flex; }
-    .modal-content { background: white; padding: 24px; border-radius: 8px; width: 90%; max-width: 480px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+    .modal-content { background: white; padding: 24px; border-radius: 8px; width: 95%; max-width: 550px; max-height: 90vh; overflow-y: auto; }
     .form-group { margin-bottom: 12px; }
-    .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
-    .form-group input { width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 4px; }
-    .price-group { display: grid; grid-template-columns: 90px 1fr 1fr; gap: 8px; align-items: center; margin-bottom: 8px; }
+    .form-group label { display: block; font-size: 12px; font-weight: 600; margin-bottom: 4px; color: var(--text-muted); }
+    .form-group input, .form-group select { width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 4px; font-size: 14px; }
+    
+    .inline-fields { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 8px; }
+    .store-input-group { background: var(--card-bg); padding: 10px; border-radius: 6px; margin-bottom: 8px; border: 1px solid var(--border); }
+    .store-header { font-weight: 600; font-size: 13px; margin-bottom: 6px; }
+    .store-fields { display: grid; grid-template-columns: 1fr 1fr 1.5fr; gap: 6px; }
+
+    @media print {
+      body { padding: 0; background: white; }
+      .cover-container, .header-actions, .btn, .modal, #formSection, .badge { display: none !important; }
+      .grid-layout { display: block; }
+      .super-collapse { break-inside: avoid; border: 1px solid #ccc; margin-bottom: 20px; }
+      .super-collapse details { open: true; }
+      .super-collapse-content { display: block !important; background: white; }
+    }
   </style>
 </head>
 <body>
@@ -64,28 +89,65 @@
 
   <div class="page-container">
     <div class="page-icon">🛒</div>
-    <h1>Lista de Compras</h1>
+    
+    <div class="header-actions">
+      <h1>Lista de Compras</h1>
+      <div>
+        <button class="btn" onclick="window.print()">🖨️ Imprimir Listas</button>
+        <button class="btn btn-primary" onclick="abrirModal()">+ Agregar Alimento</button>
+      </div>
+    </div>
 
     <div class="grid-layout">
-      <!-- Columna Izquierda: Lista y Carga -->
+      <!-- Columna Principal: Todos los productos -->
       <div>
-        <div class="card-box">
+        <div class="card-box" id="formSection">
           <div class="section-title">
-            <span>✍️ ¿Qué comprar?</span>
-            <button class="btn btn-primary btn-sm" onclick="abrirModal()">+ Agregar Producto</button>
+            <span>✍️ Artículos Pendientes</span>
+            <span id="contadorItems" style="font-size:12px; color:var(--text-muted);">0 productos</span>
           </div>
           <div id="listaProductos"></div>
         </div>
+
+        <!-- Desplegables de Compras por Supermercado -->
+        <h3 style="font-size: 18px; margin: 25px 0 12px 0;">🏬 Compras por Supermercado</h3>
+        
+        <details class="super-collapse" id="detLider">
+          <summary>
+            <span>🔵 Lider</span>
+            <span id="subtotalLider" style="font-weight:700; color:var(--lider-color);">$0</span>
+          </summary>
+          <div class="super-collapse-content" id="itemsLider">Sin artículos asignados.</div>
+        </details>
+
+        <details class="super-collapse" id="detJumbo">
+          <summary>
+            <span>🟢 Jumbo</span>
+            <span id="subtotalJumbo" style="font-weight:700; color:var(--jumbo-color);">$0</span>
+          </summary>
+          <div class="super-collapse-content" id="itemsJumbo">Sin artículos asignados.</div>
+        </details>
+
+        <details class="super-collapse" id="detMayorista">
+          <summary>
+            <span>🔴 Central Mayorista</span>
+            <span id="subtotalMayorista" style="font-weight:700; color:var(--mayorista-color);">$0</span>
+          </summary>
+          <div class="super-collapse-content" id="itemsMayorista">Sin artículos asignados.</div>
+        </details>
       </div>
 
-      <!-- Columna Derecha: Optimización de Carros -->
+      <!-- Resumen Lateral -->
       <div>
         <div class="card-box summary">
-          <div class="section-title">🛍️ Tu Compra Optimizada</div>
+          <div class="section-title">🛍️ Resumen del Ahorro</div>
+          <p style="font-size:13px; color:var(--text-muted); margin-top:0;">
+            El cálculo compara el precio total y unitario normalizado para elegir la opción más conveniente.
+          </p>
           <div id="resumenOptimo"></div>
           <hr style="border:0; border-top:1px solid var(--border); margin:15px 0;">
-          <div style="font-size:16px; font-weight:700; display:flex; justify-content:space-between;">
-            <span>Total Ahorro:</span>
+          <div style="font-size:18px; font-weight:700; display:flex; justify-content:space-between;">
+            <span>Gran Total:</span>
             <span id="granTotal" style="color:var(--green);">$0</span>
           </div>
         </div>
@@ -93,39 +155,68 @@
     </div>
   </div>
 
-  <!-- Modal para Configurar Precios del Producto -->
+  <!-- Modal para Agregar o Editar -->
   <div class="modal" id="modalProducto">
     <div class="modal-content">
-      <h3 style="margin-top:0;">Detalle del Producto</h3>
-      <div class="form-group">
-        <label>Nombre del alimento / ítem</label>
-        <input type="text" id="mNombre" placeholder="Ej: Aceite Maravilla 1L">
-      </div>
-      <div class="form-group">
-        <label>Cantidad que necesitas</label>
-        <input type="number" id="mCantidad" value="1" min="1">
-      </div>
-
-      <div style="font-size:13px; font-weight:600; margin:15px 0 8px 0;">Precios y Links por Supermercado:</div>
+      <h3 id="modalTitulo" style="margin-top:0;">Detalle del Alimento</h3>
       
-      <div class="price-group">
-        <span>Lider</span>
-        <input type="number" id="pLider" placeholder="Precio $">
-        <input type="url" id="lLider" placeholder="Link web">
+      <div class="form-group">
+        <label>Nombre del Producto *</label>
+        <input type="text" id="mNombre" placeholder="Ej: Pollo Pechuga deshuesada">
       </div>
-      <div class="price-group">
-        <span>Jumbo</span>
-        <input type="number" id="pJumbo" placeholder="Precio $">
-        <input type="url" id="lJumbo" placeholder="Link web">
-      </div>
-      <div class="price-group">
-        <span>Mayorista</span>
-        <input type="number" id="pMayorista" placeholder="Precio $">
-        <input type="url" id="lMayorista" placeholder="Link web">
-      </div>
-      <div style="font-size:11px; color:var(--text-muted); margin-bottom:15px;">* Si Mayorista exige un mínimo que excede tu cantidad, déjalo en blanco.</div>
 
-      <div style="display:flex; justify-content:flex-end; gap:8px;">
+      <div class="form-group inline-fields">
+        <div>
+          <label>Cantidad Necesaria</label>
+          <input type="number" id="mCantidad" value="1" min="0.1" step="any">
+        </div>
+        <div>
+          <label>Unidad Requerida</label>
+          <select id="mUnidad">
+            <option value="unidades">Unidades</option>
+            <option value="g">Gramos (g)</option>
+            <option value="kg">Kilos (kg)</option>
+            <option value="ml">Mililitros (ml)</option>
+            <option value="l">Litros (L)</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="font-size:12px; font-weight:600; margin:15px 0 6px 0; color:var(--text-muted);">
+        Opciones por Tienda (Opcional - Llena lo que tengas):
+      </div>
+
+      <!-- Lider -->
+      <div class="store-input-group">
+        <div class="store-header">🔵 Lider</div>
+        <div class="store-fields">
+          <input type="number" id="pLider" placeholder="Precio ($)">
+          <input type="number" id="fLider" placeholder="Formato envase" step="any">
+          <input type="url" id="lLider" placeholder="Link web">
+        </div>
+      </div>
+
+      <!-- Jumbo -->
+      <div class="store-input-group">
+        <div class="store-header">🟢 Jumbo</div>
+        <div class="store-fields">
+          <input type="number" id="pJumbo" placeholder="Precio ($)">
+          <input type="number" id="fJumbo" placeholder="Formato envase" step="any">
+          <input type="url" id="lJumbo" placeholder="Link web">
+        </div>
+      </div>
+
+      <!-- Central Mayorista -->
+      <div class="store-input-group">
+        <div class="store-header">🔴 Central Mayorista</div>
+        <div class="store-fields">
+          <input type="number" id="pMayorista" placeholder="Precio ($)">
+          <input type="number" id="fMayorista" placeholder="Formato / pack" step="any">
+          <input type="url" id="lMayorista" placeholder="Link web">
+        </div>
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; gap:8px; margin-top:15px;">
         <button class="btn" onclick="cerrarModal()">Cancelar</button>
         <button class="btn btn-primary" onclick="guardarProducto()">Guardar</button>
       </div>
@@ -133,86 +224,164 @@
   </div>
 
   <script>
-    let productos = JSON.parse(localStorage.getItem("mis_compras_super") || "[]");
+    let productos = JSON.parse(localStorage.getItem("mis_compras_super_v2") || "[]");
+    let editIndex = -1;
 
     function render() {
       const contenedor = document.getElementById("listaProductos");
       contenedor.innerHTML = "";
-      
+      document.getElementById("contadorItems").innerText = `${productos.length} productos`;
+
       let totales = { Lider: 0, Jumbo: 0, Mayorista: 0 };
       let itemsPorTienda = { Lider: [], Jumbo: [], Mayorista: [] };
       let granTotal = 0;
 
       if (productos.length === 0) {
-        contenedor.innerHTML = `<p style="color:var(--text-muted); font-size:14px;">No hay productos en la lista. Haz clic en '+ Agregar Producto'.</p>`;
+        contenedor.innerHTML = `<p style="color:var(--text-muted); font-size:14px; text-align:center; padding:20px 0;">No hay artículos en la lista.</p>`;
       }
 
       productos.forEach((p, idx) => {
-        // Determinar la opción más barata disponible
         let opciones = [];
-        if (p.lider) opciones.push({ tienda: "Lider", precio: p.lider, link: p.linkLider });
-        if (p.jumbo) opciones.push({ tienda: "Jumbo", precio: p.jumbo, link: p.linkJumbo });
-        if (p.mayorista) opciones.push({ tienda: "Mayorista", precio: p.mayorista, link: p.linkMayorista });
 
-        opciones.sort((a, b) => a.precio - b.precio);
+        // Normalización y cálculo de costo según cantidad y formato
+        const evalStore = (tienda, precio, formato, link) => {
+          if (!precio) return;
+          let costoFinal = precio;
+          let precioUnitario = precio;
+
+          if (formato && formato > 0) {
+            precioUnitario = precio / formato;
+            costoFinal = precioUnitario * p.cantidad;
+          } else {
+            costoFinal = precio * p.cantidad;
+          }
+
+          opciones.push({ tienda, precioUnitario, costoFinal, link, formato });
+        };
+
+        evalStore("Lider", p.lider, p.fLider, p.linkLider);
+        evalStore("Jumbo", p.jumbo, p.fJumbo, p.linkJumbo);
+        evalStore("Mayorista", p.mayorista, p.fMayorista, p.linkMayorista);
+
+        opciones.sort((a, b) => a.costoFinal - b.costoFinal);
         const mejor = opciones[0] || null;
 
         if (mejor) {
-          const subtotal = mejor.precio * p.cantidad;
-          totales[mejor.tienda] += subtotal;
-          itemsPorTienda[mejor.tienda].push({ nombre: p.nombre, cantidad: p.cantidad, link: mejor.link, subtotal });
-          granTotal += subtotal;
+          totales[mejor.tienda] += Math.round(mejor.costoFinal);
+          itemsPorTienda[mejor.tienda].push({
+            nombre: p.nombre,
+            cantidad: p.cantidad,
+            unidad: p.unidad,
+            subtotal: Math.round(mejor.costoFinal),
+            link: mejor.link
+          });
+          granTotal += Math.round(mejor.costoFinal);
         }
 
-        const badgeClass = mejor ? (mejor.tienda === 'Lider' ? 'badge-lider' : mejor.tienda === 'Jumbo' ? 'badge-jumbo' : 'badge-mayorista') : 'badge-none';
+        const badgeClass = mejor ? `badge-${mejor.tienda}` : 'badge-none';
 
         contenedor.innerHTML += `
           <div class="item-row">
-            <input type="checkbox" onchange="eliminarProducto(${idx})">
             <div>
-              <strong>${p.nombre}</strong> <span style="color:var(--text-muted); font-size:13px;">x${p.cantidad}</span>
+              <strong>${p.nombre}</strong> 
+              <span style="color:var(--text-muted); font-size:12px;">(${p.cantidad} ${p.unidad})</span>
             </div>
             <div>
-              ${mejor ? `<a href="${mejor.link || '#'}" target="_blank" class="badge ${badgeClass}">${mejor.tienda}: $${(mejor.precio * p.cantidad).toLocaleString('es-CL')}</a>` : '<span class="badge badge-none">Sin precio</span>'}
+              ${mejor 
+                ? `<a href="${mejor.link || '#'}" target="_blank" class="badge ${badgeClass}">${mejor.tienda}: $${Math.round(mejor.costoFinal).toLocaleString('es-CL')}</a>` 
+                : '<span class="badge badge-none">Sin precio asignado</span>'}
             </div>
-            <button class="btn btn-sm" onclick="eliminarProducto(${idx})">✕</button>
+            <button class="btn btn-sm" onclick="editarProducto(${idx})" title="Editar">✏️</button>
+            <button class="btn btn-sm" onclick="eliminarProducto(${idx})" title="Eliminar">✕</button>
           </div>
         `;
       });
 
-      // Render Resumen de Compra Dividida
-      const resumenContenedor = document.getElementById("resumenOptimo");
-      resumenContenedor.innerHTML = "";
-      
+      // Renderizar desplegables por tienda
+      ["Lider", "Jumbo", "Mayorista"].forEach(tienda => {
+        const div = document.getElementById(`items${tienda}`);
+        const subtotalSpan = document.getElementById(`subtotal${tienda}`);
+        const items = itemsPorTienda[tienda];
+
+        subtotalSpan.innerText = `$${totales[tienda].toLocaleString('es-CL')}`;
+
+        if (items.length === 0) {
+          div.innerHTML = `<span style="color:var(--text-muted);">No hay productos recomendados para ${tienda}.</span>`;
+        } else {
+          div.innerHTML = `
+            <ul style="margin:0; padding-left:18px;">
+              ${items.map(i => `
+                <li style="margin-bottom:6px;">
+                  <strong>${i.nombre}</strong> — ${i.cantidad} ${i.unidad} 
+                  <span style="color:var(--green); font-weight:600;">($${i.subtotal.toLocaleString('es-CL')})</span>
+                  ${i.link ? `<a href="${i.link}" target="_blank" style="font-size:11px; margin-left:6px;">[Ver link]</a>` : ''}
+                </li>
+              `).join("")}
+            </ul>
+          `;
+        }
+      });
+
+      // Renderizar resumen lateral
+      const resumenDiv = document.getElementById("resumenOptimo");
+      resumenDiv.innerHTML = "";
       for (const [tienda, total] of Object.entries(totales)) {
         if (total > 0) {
-          resumenContenedor.innerHTML += `
-            <div style="margin-bottom:12px;">
-              <div style="display:flex; justify-content:space-between; font-weight:600; font-size:14px;">
-                <span>🛒 Comprar en ${tienda}:</span>
-                <span>$${total.toLocaleString('es-CL')}</span>
-              </div>
-              <ul style="margin:4px 0 0 16px; padding:0; font-size:12px; color:var(--text-muted);">
-                ${itemsPorTienda[tienda].map(i => `<li>${i.nombre} (x${i.cantidad})</li>`).join("")}
-              </ul>
+          resumenDiv.innerHTML += `
+            <div style="display:flex; justify-content:space-between; font-size:14px; margin-bottom:6px;">
+              <span>🛒 En ${tienda}:</span>
+              <strong>$${total.toLocaleString('es-CL')}</strong>
             </div>
           `;
         }
       }
 
       document.getElementById("granTotal").innerText = "$" + granTotal.toLocaleString('es-CL');
-      localStorage.setItem("mis_compras_super", JSON.stringify(productos));
+      localStorage.setItem("mis_compras_super_v2", JSON.stringify(productos));
     }
 
     function abrirModal() {
+      editIndex = -1;
+      document.getElementById("modalTitulo").innerText = "Agregar Alimento";
       document.getElementById("mNombre").value = "";
       document.getElementById("mCantidad").value = "1";
+      document.getElementById("mUnidad").value = "unidades";
+      
       document.getElementById("pLider").value = "";
+      document.getElementById("fLider").value = "";
       document.getElementById("lLider").value = "";
+      
       document.getElementById("pJumbo").value = "";
+      document.getElementById("fJumbo").value = "";
       document.getElementById("lJumbo").value = "";
+      
       document.getElementById("pMayorista").value = "";
+      document.getElementById("fMayorista").value = "";
       document.getElementById("lMayorista").value = "";
+
+      document.getElementById("modalProducto").classList.add("active");
+    }
+
+    function editarProducto(idx) {
+      editIndex = idx;
+      const p = productos[idx];
+      document.getElementById("modalTitulo").innerText = "Editar Alimento";
+      document.getElementById("mNombre").value = p.nombre || "";
+      document.getElementById("mCantidad").value = p.cantidad || 1;
+      document.getElementById("mUnidad").value = p.unidad || "unidades";
+
+      document.getElementById("pLider").value = p.lider || "";
+      document.getElementById("fLider").value = p.fLider || "";
+      document.getElementById("lLider").value = p.linkLider || "";
+
+      document.getElementById("pJumbo").value = p.jumbo || "";
+      document.getElementById("fJumbo").value = p.fJumbo || "";
+      document.getElementById("lJumbo").value = p.linkJumbo || "";
+
+      document.getElementById("pMayorista").value = p.mayorista || "";
+      document.getElementById("fMayorista").value = p.fMayorista || "";
+      document.getElementById("lMayorista").value = p.linkMayorista || "";
+
       document.getElementById("modalProducto").classList.add("active");
     }
 
@@ -222,27 +391,43 @@
 
     function guardarProducto() {
       const nombre = document.getElementById("mNombre").value.trim();
-      const cantidad = parseInt(document.getElementById("mCantidad").value) || 1;
-      if (!nombre) return alert("Ingresa el nombre del producto");
+      const cantidad = parseFloat(document.getElementById("mCantidad").value) || 1;
+      const unidad = document.getElementById("mUnidad").value;
 
-      productos.push({
+      if (!nombre) return alert("Por favor ingresa el nombre del alimento.");
+
+      const itemData = {
         nombre,
         cantidad,
-        lider: parseInt(document.getElementById("pLider").value) || null,
+        unidad,
+        lider: parseFloat(document.getElementById("pLider").value) || null,
+        fLider: parseFloat(document.getElementById("fLider").value) || null,
         linkLider: document.getElementById("lLider").value.trim(),
-        jumbo: parseInt(document.getElementById("pJumbo").value) || null,
+        
+        jumbo: parseFloat(document.getElementById("pJumbo").value) || null,
+        fJumbo: parseFloat(document.getElementById("fJumbo").value) || null,
         linkJumbo: document.getElementById("lJumbo").value.trim(),
-        mayorista: parseInt(document.getElementById("pMayorista").value) || null,
+        
+        mayorista: parseFloat(document.getElementById("pMayorista").value) || null,
+        fMayorista: parseFloat(document.getElementById("fMayorista").value) || null,
         linkMayorista: document.getElementById("lMayorista").value.trim(),
-      });
+      };
+
+      if (editIndex === -1) {
+        productos.push(itemData);
+      } else {
+        productos[editIndex] = itemData;
+      }
 
       cerrarModal();
       render();
     }
 
     function eliminarProducto(idx) {
-      productos.splice(idx, 1);
-      render();
+      if (confirm("¿Seguro que quieres eliminar este producto?")) {
+        productos.splice(idx, 1);
+        render();
+      }
     }
 
     render();
