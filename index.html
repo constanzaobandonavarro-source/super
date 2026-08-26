@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lista de Compras Inteligente</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --card-bg: #f7f6f3;
+      --border: #e9e9e7;
+      --text: #37352f;
+      --text-muted: #787774;
+      --primary: #2383e2;
+      --accent: #eb5757;
+      --green: #0f7b6c;
+      --green-bg: #eaf5f2;
+    }
+    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+    body { background: var(--bg); color: var(--text); margin: 0; padding: 0 0 60px 0; }
+    
+    .cover-container { width: 100%; height: 180px; overflow: hidden; background: #e3e2de; position: relative; }
+    .cover-container img { width: 100%; height: 100%; object-fit: cover; }
+    
+    .page-container { max-width: 900px; margin: 0 auto; padding: 0 20px; position: relative; }
+    .page-icon { font-size: 50px; margin-top: -35px; margin-bottom: 10px; width: fit-content; background: white; border-radius: 8px; padding: 2px 6px; }
+    h1 { font-size: 32px; font-weight: 700; margin: 0 0 20px 0; }
+
+    .grid-layout { display: grid; grid-template-columns: 1fr 320px; gap: 24px; }
+    @media (max-width: 768px) { .grid-layout { grid-template-columns: 1fr; } }
+
+    .card-box { background: white; border: 1px solid var(--border); border-radius: 6px; padding: 16px; margin-bottom: 20px; }
+    .card-box.summary { background: var(--card-bg); }
+    
+    .section-title { font-weight: 600; font-size: 15px; margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
+    
+    .item-row { display: grid; grid-template-columns: auto 1fr auto auto; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); }
+    .item-row:last-child { border-bottom: none; }
+    .badge { font-size: 12px; padding: 2px 8px; border-radius: 4px; font-weight: 500; text-decoration: none; }
+    .badge-lider { background: #e8f0fe; color: #1967d2; }
+    .badge-jumbo { background: #e6f4ea; color: #137333; }
+    .badge-mayorista { background: #fce8e6; color: #c5221f; }
+    .badge-none { background: #f1f3f4; color: #5f6368; }
+
+    .btn { background: var(--card-bg); border: 1px solid var(--border); padding: 8px 14px; border-radius: 4px; cursor: pointer; font-size: 14px; font-weight: 500; }
+    .btn-primary { background: var(--primary); color: white; border: none; }
+    .btn-sm { padding: 4px 8px; font-size: 12px; }
+    
+    /* Modal / Pop-up */
+    .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); justify-content: center; align-items: center; z-index: 100; }
+    .modal.active { display: flex; }
+    .modal-content { background: white; padding: 24px; border-radius: 8px; width: 90%; max-width: 480px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
+    .form-group { margin-bottom: 12px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+    .form-group input { width: 100%; padding: 8px; border: 1px solid var(--border); border-radius: 4px; }
+    .price-group { display: grid; grid-template-columns: 90px 1fr 1fr; gap: 8px; align-items: center; margin-bottom: 8px; }
+  </style>
+</head>
+<body>
+
+  <div class="cover-container">
+    <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=1200&q=80" alt="Cover">
+  </div>
+
+  <div class="page-container">
+    <div class="page-icon">🛒</div>
+    <h1>Lista de Compras</h1>
+
+    <div class="grid-layout">
+      <!-- Columna Izquierda: Lista y Carga -->
+      <div>
+        <div class="card-box">
+          <div class="section-title">
+            <span>✍️ ¿Qué comprar?</span>
+            <button class="btn btn-primary btn-sm" onclick="abrirModal()">+ Agregar Producto</button>
+          </div>
+          <div id="listaProductos"></div>
+        </div>
+      </div>
+
+      <!-- Columna Derecha: Optimización de Carros -->
+      <div>
+        <div class="card-box summary">
+          <div class="section-title">🛍️ Tu Compra Optimizada</div>
+          <div id="resumenOptimo"></div>
+          <hr style="border:0; border-top:1px solid var(--border); margin:15px 0;">
+          <div style="font-size:16px; font-weight:700; display:flex; justify-content:space-between;">
+            <span>Total Ahorro:</span>
+            <span id="granTotal" style="color:var(--green);">$0</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para Configurar Precios del Producto -->
+  <div class="modal" id="modalProducto">
+    <div class="modal-content">
+      <h3 style="margin-top:0;">Detalle del Producto</h3>
+      <div class="form-group">
+        <label>Nombre del alimento / ítem</label>
+        <input type="text" id="mNombre" placeholder="Ej: Aceite Maravilla 1L">
+      </div>
+      <div class="form-group">
+        <label>Cantidad que necesitas</label>
+        <input type="number" id="mCantidad" value="1" min="1">
+      </div>
+
+      <div style="font-size:13px; font-weight:600; margin:15px 0 8px 0;">Precios y Links por Supermercado:</div>
+      
+      <div class="price-group">
+        <span>Lider</span>
+        <input type="number" id="pLider" placeholder="Precio $">
+        <input type="url" id="lLider" placeholder="Link web">
+      </div>
+      <div class="price-group">
+        <span>Jumbo</span>
+        <input type="number" id="pJumbo" placeholder="Precio $">
+        <input type="url" id="lJumbo" placeholder="Link web">
+      </div>
+      <div class="price-group">
+        <span>Mayorista</span>
+        <input type="number" id="pMayorista" placeholder="Precio $">
+        <input type="url" id="lMayorista" placeholder="Link web">
+      </div>
+      <div style="font-size:11px; color:var(--text-muted); margin-bottom:15px;">* Si Mayorista exige un mínimo que excede tu cantidad, déjalo en blanco.</div>
+
+      <div style="display:flex; justify-content:flex-end; gap:8px;">
+        <button class="btn" onclick="cerrarModal()">Cancelar</button>
+        <button class="btn btn-primary" onclick="guardarProducto()">Guardar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let productos = JSON.parse(localStorage.getItem("mis_compras_super") || "[]");
+
+    function render() {
+      const contenedor = document.getElementById("listaProductos");
+      contenedor.innerHTML = "";
+      
+      let totales = { Lider: 0, Jumbo: 0, Mayorista: 0 };
+      let itemsPorTienda = { Lider: [], Jumbo: [], Mayorista: [] };
+      let granTotal = 0;
+
+      if (productos.length === 0) {
+        contenedor.innerHTML = `<p style="color:var(--text-muted); font-size:14px;">No hay productos en la lista. Haz clic en '+ Agregar Producto'.</p>`;
+      }
+
+      productos.forEach((p, idx) => {
+        // Determinar la opción más barata disponible
+        let opciones = [];
+        if (p.lider) opciones.push({ tienda: "Lider", precio: p.lider, link: p.linkLider });
+        if (p.jumbo) opciones.push({ tienda: "Jumbo", precio: p.jumbo, link: p.linkJumbo });
+        if (p.mayorista) opciones.push({ tienda: "Mayorista", precio: p.mayorista, link: p.linkMayorista });
+
+        opciones.sort((a, b) => a.precio - b.precio);
+        const mejor = opciones[0] || null;
+
+        if (mejor) {
+          const subtotal = mejor.precio * p.cantidad;
+          totales[mejor.tienda] += subtotal;
+          itemsPorTienda[mejor.tienda].push({ nombre: p.nombre, cantidad: p.cantidad, link: mejor.link, subtotal });
+          granTotal += subtotal;
+        }
+
+        const badgeClass = mejor ? (mejor.tienda === 'Lider' ? 'badge-lider' : mejor.tienda === 'Jumbo' ? 'badge-jumbo' : 'badge-mayorista') : 'badge-none';
+
+        contenedor.innerHTML += `
+          <div class="item-row">
+            <input type="checkbox" onchange="eliminarProducto(${idx})">
+            <div>
+              <strong>${p.nombre}</strong> <span style="color:var(--text-muted); font-size:13px;">x${p.cantidad}</span>
+            </div>
+            <div>
+              ${mejor ? `<a href="${mejor.link || '#'}" target="_blank" class="badge ${badgeClass}">${mejor.tienda}: $${(mejor.precio * p.cantidad).toLocaleString('es-CL')}</a>` : '<span class="badge badge-none">Sin precio</span>'}
+            </div>
+            <button class="btn btn-sm" onclick="eliminarProducto(${idx})">✕</button>
+          </div>
+        `;
+      });
+
+      // Render Resumen de Compra Dividida
+      const resumenContenedor = document.getElementById("resumenOptimo");
+      resumenContenedor.innerHTML = "";
+      
+      for (const [tienda, total] of Object.entries(totales)) {
+        if (total > 0) {
+          resumenContenedor.innerHTML += `
+            <div style="margin-bottom:12px;">
+              <div style="display:flex; justify-content:space-between; font-weight:600; font-size:14px;">
+                <span>🛒 Comprar en ${tienda}:</span>
+                <span>$${total.toLocaleString('es-CL')}</span>
+              </div>
+              <ul style="margin:4px 0 0 16px; padding:0; font-size:12px; color:var(--text-muted);">
+                ${itemsPorTienda[tienda].map(i => `<li>${i.nombre} (x${i.cantidad})</li>`).join("")}
+              </ul>
+            </div>
+          `;
+        }
+      }
+
+      document.getElementById("granTotal").innerText = "$" + granTotal.toLocaleString('es-CL');
+      localStorage.setItem("mis_compras_super", JSON.stringify(productos));
+    }
+
+    function abrirModal() {
+      document.getElementById("mNombre").value = "";
+      document.getElementById("mCantidad").value = "1";
+      document.getElementById("pLider").value = "";
+      document.getElementById("lLider").value = "";
+      document.getElementById("pJumbo").value = "";
+      document.getElementById("lJumbo").value = "";
+      document.getElementById("pMayorista").value = "";
+      document.getElementById("lMayorista").value = "";
+      document.getElementById("modalProducto").classList.add("active");
+    }
+
+    function cerrarModal() {
+      document.getElementById("modalProducto").classList.remove("active");
+    }
+
+    function guardarProducto() {
+      const nombre = document.getElementById("mNombre").value.trim();
+      const cantidad = parseInt(document.getElementById("mCantidad").value) || 1;
+      if (!nombre) return alert("Ingresa el nombre del producto");
+
+      productos.push({
+        nombre,
+        cantidad,
+        lider: parseInt(document.getElementById("pLider").value) || null,
+        linkLider: document.getElementById("lLider").value.trim(),
+        jumbo: parseInt(document.getElementById("pJumbo").value) || null,
+        linkJumbo: document.getElementById("lJumbo").value.trim(),
+        mayorista: parseInt(document.getElementById("pMayorista").value) || null,
+        linkMayorista: document.getElementById("lMayorista").value.trim(),
+      });
+
+      cerrarModal();
+      render();
+    }
+
+    function eliminarProducto(idx) {
+      productos.splice(idx, 1);
+      render();
+    }
+
+    render();
+  </script>
+</body>
+</html>
