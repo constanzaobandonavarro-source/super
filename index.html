@@ -254,7 +254,7 @@
     let editIndex = -1;
 
     async function cargarDesdeSheets() {
-      if (!API_URL || API_URL === "PEGA_AQUI_TU_URL_DE_APPS_SCRIPT") {
+      if (!API_URL || API_URL === "https://script.googleusercontent.com/macros/echo?user_content_key=AUkAhnTY2wdklM_BOeU82jLGBobaP9MEZUOSHf9TNcoc625WTh8G8_U98vJb7erpi321qI92kdJp4GvRxIBkTfNFTYDmsKA6ObKpo2p0hYGOSSHLBj7QYfcIKDKaxt8-hgaawA2N1V921AsI3dbuAutripxxoZMKWE7RbJS3n_roK9lBCLX3WzvHPkbIVK0cCOL1GejbbaEzc9UybHJ0BFF12AoHHH6C6UWGz0bIEroNAk8S7fu5iPCfxS4Tq55l41OQ3I-qjYfVvXow10hiBNa5_WD5eZnhjw&lib=M5T_iTLMi0d8zX2IiwLxXxmDsf9vuBZSi") {
         productos = JSON.parse(localStorage.getItem("mis_compras_super_v3") || "[]");
         render();
         return;
